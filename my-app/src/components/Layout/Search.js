@@ -3,10 +3,12 @@ import useDebounce from "../../hooks/useDebounce";
 import { search } from "../../BooksAPI";
 import { useCallback, useEffect, useState } from "react";
 import SearchResults from "./SearchResults";
+import CircularLoading from "../UI/CircularLoading";
 const Search = (props) => {
   const [enteredSearchTerm, setEnteredSearchTerm] = useState("");
   const [searchItems, setSearchItems] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [error, setError] = useState(null);
   const debouncedSearchTerm = useDebounce(enteredSearchTerm, 300);
 
   const enteredSearchTermChangeHandler = (event) => {
@@ -14,7 +16,10 @@ const Search = (props) => {
   };
   const bookSearch = useCallback(async () => {
     setIsSearching(true);
+    setError(null);
     if (debouncedSearchTerm.trim() === "") {
+      setIsSearching(false);
+
       setSearchItems([]);
       return;
     }
@@ -23,15 +28,17 @@ const Search = (props) => {
       throw new Error("No Books Found");
     }
     setSearchItems(response);
+    setIsSearching(false);
     console.log(response);
   }, [debouncedSearchTerm]);
   useEffect(() => {
     bookSearch().catch((error) => {
-      console.log(error);
+      setError(error.message);
       setSearchItems([]);
       setIsSearching(false);
     });
   }, [debouncedSearchTerm, bookSearch]);
+
   return (
     <div className={classes["search-books"]}>
       <div className={classes["search-books-bar"]}>
@@ -58,7 +65,10 @@ const Search = (props) => {
           />
         </div>
       </div>
-      <SearchResults searchResults={searchItems} />
+      {isSearching && <CircularLoading panner="Searching"></CircularLoading>}
+      {!isSearching && (
+        <SearchResults searchResults={searchItems} error={error} />
+      )}
     </div>
   );
 };

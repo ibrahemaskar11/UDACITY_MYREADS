@@ -1,18 +1,20 @@
 import Book from "../Books/Book";
-import classes from './SearchResults.module.css'
+import classes from "./SearchResults.module.css";
 const SearchResults = (props) => {
-    if(props.searchResults.length === 0) {console.log('zero');}
-  const searchResultsContent = props.searchResults.map((book) => (
-      <Book
-        key={book.id}
-        title={book.title}
-        image={book.imageLinks?.thumbnail}
-        authors={book.authors}
-      />
-  ));
+  const searchResultsContent = (
+    <ol className={classes["books-grid"]}>
+      {props.searchResults.map((book) => (
+        <Book
+          key={book.id}
+          book={book}
+        />
+      ))}
+    </ol>
+  );
   return (
     <div className={classes["search-books-results"]}>
-      <ol className={classes["books-grid"]}>{searchResultsContent}</ol>
+      {props.error && <p className={classes.error}>{props.error}</p>}
+      {!props.error && searchResultsContent}
     </div>
   );
 };
