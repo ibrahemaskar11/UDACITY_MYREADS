@@ -1,6 +1,20 @@
 import BookShelf from "../Books/BookShelf";
 import classes from "./Home.module.css";
+import { useState, useEffect, useContext } from "react";
+import MyReadsContext from "../../Store/MyReadsContext";
 const Home = (props) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const { getMyBooks } = useContext(MyReadsContext);
+  const { books } = useContext(MyReadsContext);
+  useEffect(() => {
+    getMyBooks();
+    setIsLoading(false);
+  }, []);
+  const currentlyReading = books.filter(
+    (book) => book.shelf === "currentlyReading"
+  );
+  const wantToRead = books.filter((book) => book.shelf === "wantToRead");
+  const read = books.filter((book) => book.shelf === "read");
   return (
     <div>
       <div className={classes["list-books"]}>
@@ -9,16 +23,14 @@ const Home = (props) => {
         </div>
         <div className={classes["list-books-content"]}>
           <div>
-            <BookShelf type="Currently Reading" />
-            <BookShelf type="Want to Read" />
-            <BookShelf type="Read" />
+            <BookShelf type="Currently Reading" books={currentlyReading} />
+            <BookShelf type="Want to Read" books={wantToRead} />
+            <BookShelf type="Read" books={read} />
           </div>
         </div>
       </div>
       <div className={classes["open-search"]}>
-        <button>
-          Add a book
-        </button>
+        <button onClick={props.onShowSearch}>Add a book</button>
       </div>
     </div>
   );
