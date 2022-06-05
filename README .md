@@ -1,5 +1,8 @@
 # MYReads project
-MYReads projec is a project that manage books and categorized books into 3 categories (Currently reading - read - want to read) anf gives you the ability to switch between these categories and search for more books to add them to your shelves, developed by REACT.JS
+-MYReads project is a book tracker app that manages books and categorize them into 3 categories (Currently reading - read - want to read)
+-MyReads gives you the ability to switch books between the shelves just like the real world
+-It also allows you to search for more books and add them to your shelves
+-developed by REACT.JS
 
 
 # installation and launch steps
