@@ -1,45 +1,53 @@
+/*
+-Home component is used to render Boook Shelvs
+*/
 import BookShelf from "../Books/BookShelf";
 import classes from "./Home.module.css";
-import { useState, useEffect, useContext, useMemo } from "react";
+import { useEffect, useContext, Fragment } from "react";
 import MyReadsContext from "../../Store/MyReadsContext";
 import CircularLoading from "../UI/CircularLoading";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
+  //getMyBooks is imported from MyReadsContext to intialize the home page when needed and get the books from the database the moment the website is opened or reloaded
   const { getMyBooks } = useContext(MyReadsContext);
-  const { books } = useContext(MyReadsContext);
   const { isLoading } = useContext(MyReadsContext);
-  console.log(isLoading);
-  useEffect(() => { 
+  //useEffect used with no dependencies to call getMyBooks() whenever the website is opened or reloaded
+  useEffect(() => {
     getMyBooks();
   }, []);
-  const currentlyReading = books.filter(
-    (book) => book.shelf === "currentlyReading"
-  );
-  const wantToRead = books.filter((book) => book.shelf === "wantToRead");
-  const read = books.filter((book) => book.shelf === "read");
-  let pageContent = isLoading ? (
-    <CircularLoading panner="Loading" />
-  ) : (
+  //page content constant is used for clean code purposes
+  const pageContent = (
     <div className={classes["page-content"]}>
       <div className={classes["list-books-content"]}>
         <div>
-          <BookShelf type='currentlyReading' title="Currently Reading" books={currentlyReading} />
-          <BookShelf type='wantToRead' title="Want to Read" books={wantToRead} />
-          <BookShelf type='read' title="Read" books={read} />
+          <BookShelf type="currentlyReading" title="Currently Reading" />
+          <BookShelf type="wantToRead" title="Want to Read" />
+          <BookShelf type="read" title="Read" />
         </div>
       </div>
       <div className={classes["open-search"]}>
-        <button onClick={props.onShowSearch}>Add a book</button>
+        {/*
+          -a link is used to move to the search route when the button is clicked
+        */}
+        <Link to="search" className={classes["open-search-btn"]} />
       </div>
     </div>
   );
+
   return (
-        <>
-          <div className={classes["list-books-title"]}>
-            <h1>MyReads</h1>
-          </div>
-          {pageContent}
-        </>
+    //React fragment is used to avoid unnecessary div rendering
+    <Fragment>
+      <div className={classes["list-books-title"]}>
+        <h1>MyReads</h1>
+      </div>
+      {/*
+        -if isLoading value is true the CircularLoading component is rendered
+        -else the pageContent is rendered
+      */}
+      {isLoading && <CircularLoading panner="Loading" />}
+      {!isLoading && pageContent}
+    </Fragment>
   );
 };
 export default Home;

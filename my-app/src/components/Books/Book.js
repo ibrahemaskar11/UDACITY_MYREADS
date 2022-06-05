@@ -1,25 +1,28 @@
+/*
+-Book component is used to render books
+*/
 import classes from "./Book.module.css";
 import { useState, useContext } from "react";
-import { update } from "../../BooksAPI";
 import MyReadsContext from "../../Store/MyReadsContext";
 const Book = (props) => {
   const { book } = props;
   const [bookValue, setBookValue] = useState(book.shelf);
-  const {getMyBooks} = useContext(MyReadsContext)
+  const { updateMyBooks } = useContext(MyReadsContext);
+  //authors constant is initialized to the book.authors if it exists each joined by a ',' or to UNKONWN if it doesn't(would result in error if not specified)
   const authors = book.authors ? book.authors.join(",\n") : "UNKOWN";
+  const bookImage = book.imageLinks?.thumbnail;
+  //bookOptions list is used to initialize the select menu later on
   const bookOptions = [
     { id: 0, text: "Currently Reading", value: "currentlyReading" },
     { id: 1, text: "Want to Read", value: "wantToRead" },
     { id: 2, text: "Read", value: "read" },
     { id: 3, text: "none", value: "None" },
   ];
-  const updateBookShelf = async (val) => {
-    await update(book, val);
-  };
+  //changeBookShelfHandler is used to set the book value with each change to the select menu
+  //ChangeBookShelfHandler is used to call the updateMyBooks function which is imported from MyReadsContext whenever the bookValue changes or whenever the book is to be moved among the shelves
   const changeBookShelfHandler = async (e) => {
     setBookValue(e.target.value);
-    await updateBookShelf(e.target.value);
-    getMyBooks()
+    updateMyBooks(book, e.target.value);
   };
   return (
     <li>
@@ -30,11 +33,11 @@ const Book = (props) => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks?.thumbnail})`,
+              backgroundImage: `url(${bookImage})`,
             }}
           ></div>
           <div className={classes["book-shelf-changer"]}>
-            <select onChange={changeBookShelfHandler} value={bookValue}>
+            <select onChange={changeBookShelfHandler} value={bookValue || 'None'} >
               <option value="move" disabled>
                 Move to...
               </option>
