@@ -14,8 +14,8 @@ const Book = (props) => {
   //bookOptions list is used to initialize the select menu later on
   const bookOptions = [
     { id: 0, text: "Currently Reading", value: "currentlyReading" },
-    { id: 1, text: "Want to Read", value: "wantToRead" },
     { id: 2, text: "Read", value: "read" },
+    { id: 1, text: "Want to Read", value: "wantToRead" },
     { id: 3, text: "none", value: "None" },
   ];
   //changeBookShelfHandler is used to set the book value with each change to the select menu
@@ -37,7 +37,10 @@ const Book = (props) => {
             }}
           ></div>
           <div className={classes["book-shelf-changer"]}>
-            <select onChange={changeBookShelfHandler} value={bookValue || 'None'} >
+            <select
+              onChange={changeBookShelfHandler}
+              value={bookValue || "None"}
+            >
               <option value="move" disabled>
                 Move to...
               </option>
