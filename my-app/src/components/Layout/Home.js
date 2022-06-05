@@ -22,8 +22,8 @@ const Home = (props) => {
       <div className={classes["list-books-content"]}>
         <div>
           <BookShelf type="currentlyReading" title="Currently Reading" />
-          <BookShelf type="wantToRead" title="Want to Read" />
           <BookShelf type="read" title="Read" />
+          <BookShelf type="wantToRead" title="Want to Read" />
         </div>
       </div>
       <div className={classes["open-search"]}>
