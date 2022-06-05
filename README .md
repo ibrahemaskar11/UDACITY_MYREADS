@@ -6,7 +6,7 @@ MYReads projec is a project that manage books and categorized books into 3 categ
 
 1 - first clone the repo
 ```
-git clone https://github.com/MohamedEhab2001/UDACITY_MYREADS.git
+git clone https://github.com/ibrahemaskar11/UDACITY_MYREADS.git
 ```
 2- open the folder with UDACITY_MYREADS name in your IDE
 
