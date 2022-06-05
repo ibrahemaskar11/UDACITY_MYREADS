@@ -17,7 +17,7 @@ const BookShelf = (props) => {
   ));
   return (
     <div className={classes["bookshelf"]}>
-      <h2 className={classes["bookshelf-title"]}>{props.type}</h2>
+      <h2 className={classes["bookshelf-title"]}>{props.title}</h2>
       <div className={classes["bookshelf-books"]}>
         <ol className={classes["books-grid"]}>{shelfBooksContent} </ol>
       </div>
