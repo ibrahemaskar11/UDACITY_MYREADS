@@ -2,14 +2,21 @@
 -SearchResults component is used to render the search results
 -SearchResults component either renders a list of search results or it renders the search error(No Books Found) 
 */
+import { useContext } from "react";
+import MyReadsContext from "../../Store/MyReadsContext";
 import Book from "../Books/Book";
 import classes from "./SearchResults.module.css";
 const SearchResults = (props) => {
-  
+  const { books } = useContext(MyReadsContext);
+  //if the book already exists in books in MyReadsContext then that book in the searchResults should be swapped with the object in the context to include the value of the book 
+  const modifiedSearchResults = props.searchResults.map((book) => {
+    const onShelf = books.filter((bk) => bk.id === book.id);
+    return onShelf.length ? onShelf[0] : book;
+  });
   //the searchResults passed by the component props is to be mapped into a list of books each with its own unique key
   const searchResultsContent = (
     <ol className={classes["books-grid"]}>
-      {props.searchResults.map((book) => (
+      {modifiedSearchResults.map((book) => (
         <Book key={book.id} book={book} />
       ))}
     </ol>

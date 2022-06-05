@@ -9,13 +9,8 @@ import CircularLoading from "../UI/CircularLoading";
 import { Link } from "react-router-dom";
 
 const Home = (props) => {
-  //getMyBooks is imported from MyReadsContext to intialize the home page when needed and get the books from the database the moment the website is opened or reloaded
-  const { getMyBooks } = useContext(MyReadsContext);
   const { isLoading } = useContext(MyReadsContext);
-  //useEffect used with no dependencies to call getMyBooks() whenever the website is opened or reloaded
-  useEffect(() => {
-    getMyBooks();
-  }, []);
+  
   //page content constant is used for clean code purposes
   const pageContent = (
     <div className={classes["page-content"]}>

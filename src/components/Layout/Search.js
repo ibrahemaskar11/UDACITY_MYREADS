@@ -4,15 +4,18 @@
 import classes from "./Search.module.css";
 import useDebounce from "../../hooks/useDebounce";
 import { search } from "../../BooksAPI";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import SearchResults from "./SearchResults";
 import CircularLoading from "../UI/CircularLoading";
 import { Link } from "react-router-dom";
+import MyReadsContext from "../../Store/MyReadsContext";
 const Search = (props) => {
   const [enteredSearchTerm, setEnteredSearchTerm] = useState("");
   const [searchItems, setSearchItems] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [error, setError] = useState(null);
+  const { getMyBooks } = useContext(MyReadsContext);
+
   //useDebounce is a custom hook that takes the entered value to be debounced and the wanted delay
   //further explaination is in the useDebounce component
   const debouncedSearchTerm = useDebounce(enteredSearchTerm, 300);

@@ -2,12 +2,15 @@
 -Book component is used to render books
 */
 import classes from "./Book.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import MyReadsContext from "../../Store/MyReadsContext";
 const Book = (props) => {
   const { book } = props;
-  const [bookValue, setBookValue] = useState(book.shelf);
-  const { updateMyBooks } = useContext(MyReadsContext);
+  const [bookValue, setBookValue] = useState(book.shelf ? book.shelf : null);
+  const { updateMyBooks, books, getMyBooks } = useContext(MyReadsContext);
+  //isFound would be later used to identify if the book already exists in the context or not
+  const isFound = books.some((el) => el.id === book.id);
+
   //authors constant is initialized to the book.authors if it exists each joined by a ',' or to UNKONWN if it doesn't(would result in error if not specified)
   const authors = book.authors ? book.authors.join(",\n") : "UNKOWN";
   const bookImage = book.imageLinks?.thumbnail;
@@ -39,10 +42,10 @@ const Book = (props) => {
           <div className={classes["book-shelf-changer"]}>
             <select
               onChange={changeBookShelfHandler}
-              value={bookValue || "None"}
+              defaultValue={bookValue ? bookValue : "None"}
             >
               <option value="move" disabled>
-                Move to...
+                {isFound ? "Move to..." : "Add to..."}
               </option>
               {bookOptions.map((book) => (
                 <option key={book.id} value={book.value}>
