@@ -10,8 +10,14 @@ const SearchResults = (props) => {
   const { books } = useContext(MyReadsContext);
   //if the book already exists in books in MyReadsContext then that book in the searchResults should be swapped with the object in the context to include the value of the book
   const modifiedSearchResults = props.searchResults.map((book) => {
-    const withinShelf = books.filter((el) => el.id === book.id);
-    return withinShelf.length ? withinShelf[0] : book;
+    let withinShelf;
+    books.forEach((el) => {
+      if (el.id === book.id) {
+        withinShelf = el;
+      }
+    });
+    // const withinShelf = books.filter((el) => el.id === book.id);
+    return withinShelf ? withinShelf : book;
   });
   //the searchResults passed by the component props is to be mapped into a list of books each with its own unique key
   const searchResultsContent = (
