@@ -3,7 +3,7 @@
 */
 import BookShelf from "../Books/BookShelf";
 import classes from "./Home.module.css";
-import { useEffect, useContext, Fragment } from "react";
+import { useContext, Fragment } from "react";
 import MyReadsContext from "../../Store/MyReadsContext";
 import CircularLoading from "../UI/CircularLoading";
 import { Link } from "react-router-dom";

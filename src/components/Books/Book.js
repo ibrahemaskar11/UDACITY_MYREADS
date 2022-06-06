@@ -7,7 +7,7 @@ import MyReadsContext from "../../Store/MyReadsContext";
 const Book = (props) => {
   const { book } = props;
   const [bookValue, setBookValue] = useState(book.shelf ? book.shelf : null);
-  const { updateMyBooks, books, getMyBooks } = useContext(MyReadsContext);
+  const { updateMyBooks, books } = useContext(MyReadsContext);
   //isFound would be later used to identify if the book already exists in the context or not
   const isFound = books.some((el) => el.id === book.id);
 

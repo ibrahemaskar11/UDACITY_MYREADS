@@ -4,7 +4,6 @@ import Home from "./components/Layout/Home";
 import Search from "./components/Layout/Search";
 import { useEffect, useContext } from "react";
 import MyReadsContext from "./Store/MyReadsContext";
-import MyReadsProvider from "./Store/MyReadsProvider";
 
 const App = (props) => {
   const { getMyBooks } = useContext(MyReadsContext);
