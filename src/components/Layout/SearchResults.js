@@ -14,12 +14,12 @@ const SearchResults = (props) => {
     books.forEach((el) => {
       if (el.id === book.id) {
         withinShelf = el;
+        return;
       }
     });
-    // const withinShelf = books.filter((el) => el.id === book.id);
     return withinShelf ? withinShelf : book;
   });
-  //the searchResults passed by the component props is to be mapped into a list of books each with its own unique key
+  //the searchResults passed by the component props is to be mapped into an unordered list of books each with its own unique key
   const searchResultsContent = (
     <ol className={classes["books-grid"]}>
       {modifiedSearchResults.map((book) => (
